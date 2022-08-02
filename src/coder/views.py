@@ -1,9 +1,11 @@
+from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render
 from coder.models import Curso, Estudiante, Profesor, Entregable
 # Create your views here.
 
-def lista_cursos(request):
+def lista_cursos(request):  #Se va a realizar una herencia desde index hacia el template
+    
     
     cursos = Curso.objects.all()
     
@@ -12,7 +14,13 @@ def lista_cursos(request):
     for curso in cursos:
         lista_cursos_nombres.append(curso.nombre)
 
-    return HttpResponse(lista_cursos_nombres)
+    
+    context = {
+        'mensaje': 'Bienvenid@s',
+        'mensaje_bienvenida':'Esta es la comision 40150',
+        'listado_cursos': lista_cursos_nombres
+    }
+    return render(request, 'coder/cursos.html',context)
     
 
 def inicio(request):
